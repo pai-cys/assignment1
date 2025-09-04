@@ -1,0 +1,102 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "stock-chatbot"
+version = "1.0.0"
+description = "주가 계산 챗봇 - LangGraph와 Streamlit을 사용한 비동기 주가 계산 챗봇"
+authors = [
+    {name = "YoonSeo Cho"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["chatbot", "stock", "langraph", "streamlit", "ai", "finance"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+dependencies = [
+    "fastapi>=0.104.1",
+    "uvicorn>=0.24.0",
+    "yfinance>=0.2.65",
+    "numexpr",
+    "langgraph",
+    "langchain-openai",
+    "openai",
+    "python-dotenv",
+    "requests",
+    "streamlit",
+    "pydantic-settings>=2.10.1",
+    "dependency-injector>=4.48.1",
+    "langchain>=0.3.27",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-asyncio>=0.21.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/pai-cys/stock-chatbot"
+Documentation = "https://github.com/pai-cys/stock-chatbot#readme"
+Repository = "https://github.com/pai-cys/stock-chatbot.git"
+Issues = "https://github.com/pai-cys/stock-chatbot/issues"
+
+[project.scripts]
+stock-chatbot-server = "webapp.app:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src", "webapp"]
+
+[tool.uv]
+dev-dependencies = [
+    "httpx>=0.28.1",
+    "pytest>=7.4.3",
+    "pytest-asyncio>=0.21.1",
+    "pytest-mock>=3.14.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
